@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2013-2017 Pierre-François Gimenez
+ * Distributed under the MIT License.
  */
 
 package injector;
@@ -90,6 +91,16 @@ public class Injector
 		if(instanciedServices.containsKey(classe.getSimpleName()))
 			return (S) instanciedServices.get(classe.getSimpleName());
 		return null;
+	}
+	
+	public synchronized <S> void addService(Class<S> classe, S object)
+	{
+		instanciedServices.put(classe.getSimpleName(), object);
+	}
+	
+	public synchronized <S> void removeService(Class<S> classe)
+	{
+		instanciedServices.remove(classe.getSimpleName());
 	}
 
 	/**
