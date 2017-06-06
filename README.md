@@ -1,6 +1,8 @@
-# DEPENDENCY-INJECTOR : a simple dependency injector
+# A simple dependency injector
 
 ## Downloading / compiling
+
+[![Build Status](https://travis-ci.org/PFGimenez/dependency-injector.svg?branch=master)](https://travis-ci.org/PFGimenez/dependency-injector)
 
 You can find the latest compiled .jar here : https://github.com/PFGimenez/dependency-injector/releases/tag/latest.
 
