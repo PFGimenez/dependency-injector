@@ -2,8 +2,8 @@
     <project basedir="." default="build" name="Injector">
     <property environment="env"/>
     <property name="debuglevel" value="source,lines,vars"/>
-    <property name="target" value="1.7"/>
-    <property name="source" value="1.7"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
     <property name="junit.output.dir" value="junit"/>
     <path id="Injector.classpath">
         <pathelement location="bin"/>
