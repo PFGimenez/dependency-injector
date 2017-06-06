@@ -4,7 +4,7 @@
 
 [![Build Status](https://travis-ci.org/PFGimenez/dependency-injector.svg?branch=master)](https://travis-ci.org/PFGimenez/dependency-injector)
 
-You can find the latest compiled .jar here : https://github.com/PFGimenez/dependency-injector/releases/tag/latest.
+You can find the latest compiled .jar here : https://github.com/PFGimenez/dependency-injector/releases/download/latest/injector.jar.
 
 Otherwise, you can compile it yourself. You will need a JDK and ```ant```.
 
@@ -12,7 +12,4 @@ Otherwise, you can compile it yourself. You will need a JDK and ```ant```.
     $ cd dependency-injector
     $ ant
 
-Two files will be created :
-- injector.jar, containing the compiled code .class
-- injector-sources.jar, containing the sources .java
-
+The file ```injector.jar```, containing the compiled code .class and the sources .java, will be created.
