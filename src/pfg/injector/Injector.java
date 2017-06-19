@@ -3,7 +3,7 @@
  * Distributed under the MIT License.
  */
 
-package injector;
+package pfg.injector;
 
 import java.io.File;
 import java.io.FileWriter;

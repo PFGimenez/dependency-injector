@@ -3,7 +3,7 @@
  * Distributed under the MIT License.
  */
 
-package injector;
+package pfg.injector;
 
 /**
  * Exception thrown by the dependency injector
