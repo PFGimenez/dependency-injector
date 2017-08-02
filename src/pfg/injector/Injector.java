@@ -37,12 +37,10 @@ public class Injector
 	 */
 	public void saveGraph(String filename)
 	{
-		System.out.println("Sauvegarde du graphe de dépendances");
-
 		try
 		{
 			FileWriter fw = new FileWriter(new File(filename));
-			fw.write("digraph dependancesJava {\n\n");
+			fw.write("digraph dependences {\n\n");
 
 			for(Class<?> classe : grapheDep.keySet())
 				fw.write(classe.getSimpleName() + ";\n");
@@ -62,6 +60,8 @@ public class Injector
 			}
 			fw.write("\n}\n");
 			fw.close();
+			
+			System.out.println("Dependency graph saved");
 		}
 		catch(IOException e)
 		{
@@ -156,7 +156,7 @@ public class Injector
 				}
 				catch(Exception e)
 				{
-					throw new InjectorException(classe.getSimpleName() + " a plusieurs constructeurs et aucun constructeur par défaut !");
+					throw new InjectorException(classe.getSimpleName() + " has several constructors and no default constructor !");
 				}
 			}
 			else if(classe.getConstructors().length == 0)
@@ -165,7 +165,7 @@ public class Injector
 				for(String s : stack)
 					out += s + " -> ";
 				out += classe.getSimpleName();
-				throw new InjectorException(classe.getSimpleName() + " n'a aucun constructeur ! " + out);
+				throw new InjectorException(classe.getSimpleName() + " has no public constructor ! " + out);
 			}
 			else
 				constructeur = (Constructor<S>) classe.getConstructors()[0];
@@ -212,7 +212,7 @@ public class Injector
 		catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException | InstantiationException e)
 		{
 			e.printStackTrace();
-			throw new InjectorException(e.toString() + "\nClasse demandée : " + classe.getSimpleName());
+			throw new InjectorException(e.toString() + "\nThe exception comes from the instanciation of " + classe.getSimpleName());
 		}
 	}
 }
