@@ -212,7 +212,12 @@ public class Injector
 		catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException | InstantiationException e)
 		{
 			e.printStackTrace();
-			throw new InjectorException(e.toString() + "\nThe exception comes from the instanciation of " + classe.getSimpleName());
+			String out = "";
+			for(String s : stack)
+				out += s + " -> ";
+			out += classe.getSimpleName();
+
+			throw new InjectorException(e.toString() + "\nThe exception comes from the instanciation of " + classe.getSimpleName()+" (trace : "+out+")");
 		}
 	}
 }
