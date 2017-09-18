@@ -12,6 +12,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.Stack;
 
@@ -129,9 +130,7 @@ public class Injector
 			{
 				// Dépendance circulaire détectée !
 				String out = "A circular dependency has been detected : ";
-				for(String s : stack)
-					out += s + " -> ";
-				out += classe.getSimpleName();
+				out += printStack(stack);
 				throw new InjectorException(out);
 			}
 
@@ -156,15 +155,12 @@ public class Injector
 				}
 				catch(Exception e)
 				{
-					throw new InjectorException(classe.getSimpleName() + " has several constructors and no default constructor !");
+					throw new InjectorException(classe.getSimpleName() + " has several constructors and no default constructor !", e);
 				}
 			}
 			else if(classe.getConstructors().length == 0)
 			{
-				String out = "";
-				for(String s : stack)
-					out += s + " -> ";
-				out += classe.getSimpleName();
+				String out = printStack(stack);
 				throw new InjectorException(classe.getSimpleName() + " has no public constructor ! " + out);
 			}
 			else
@@ -211,13 +207,20 @@ public class Injector
 		}
 		catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException | InstantiationException e)
 		{
-			e.printStackTrace();
-			String out = "";
-			for(String s : stack)
-				out += s + " -> ";
-			out += classe.getSimpleName();
-
-			throw new InjectorException(e.toString() + "\nThe exception comes from the instanciation of " + classe.getSimpleName()+" (trace : "+out+")");
+			throw new InjectorException("Impossible instanciation of " + classe.getSimpleName()+" (trace : "+printStack(stack)+")", e);
 		}
+	}
+
+	private String printStack(Stack<String> stack)
+	{
+		String out = "Dependency stack : ";
+		Iterator<String> iter = stack.iterator();
+		while(iter.hasNext())
+		{
+			out += iter.next();
+			if(iter.hasNext())
+				out += " -> ";
+		}
+		return out;
 	}
 }

@@ -16,15 +16,14 @@ public class InjectorException extends Exception
 {
 
 	private static final long serialVersionUID = -960091158805232282L;
-
-	public InjectorException()
-	{
-		super();
-	}
-
+	
 	public InjectorException(String m)
 	{
 		super(m);
 	}
 
+	public InjectorException(String m, Throwable cause)
+	{
+		super(m, cause);
+	}
 }
