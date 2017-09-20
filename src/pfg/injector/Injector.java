@@ -17,24 +17,19 @@ import java.util.Set;
 import java.util.Stack;
 
 /**
+ * Simple dependency injector.
  * 
- * Gestionnaire de la durée de vie des objets dans le code.
- * Permet à n'importe quelle classe implémentant l'interface "Service"
- * d'appeller d'autres instances de services via son constructeur.
- * Une classe implémentant Service n'est instanciée que par la classe
- * "Container"
- * 
- * @author pf
+ * @author Pierre-François Gimenez
  */
 public class Injector
 {
 	// liste des services déjà instanciés
-	private HashMap<String, Object> instanciedServices = new HashMap<String, Object>();
-
+	private HashMap<Class<?>, Object> instanciedServices = new HashMap<Class<?>, Object>();
 	private HashMap<Class<?>, Set<String>> grapheDep = new HashMap<Class<?>, Set<String>>();
 	
 	/**
-	 * Sauvegarde le graphe de dépendances.
+	 * Save the dependency graph into a .dot file
+	 * @param filename
 	 */
 	public void saveGraph(String filename)
 	{
@@ -71,37 +66,59 @@ public class Injector
 	}
 
 	/**
-	 * Créé un object de la classe demandée, ou le récupère s'il a déjà été créé
-	 * S'occupe automatiquement des dépendances
-	 * Toutes les classes demandées doivent implémenter Service ; c'est juste
-	 * une sécurité.
+	 * Create (if necessary) an object of this class
+	 * Deals with the dependency injection.
 	 * 
-	 * @param classe
-	 * @return un objet de cette classe
+	 * @param clazz
+	 * @return an instance of this class
 	 * @throws InjectorException
-	 * @throws InterruptedException
 	 */
-	public synchronized <S> S getService(Class<S> serviceTo) throws InjectorException
+	public synchronized <S> S getService(Class<S> clazz) throws InjectorException
 	{
-		return getServiceRecursif(serviceTo, new Stack<String>());
+		return getServiceRecursif(clazz, new Stack<String>());
 	}
 
-	@SuppressWarnings("unchecked")
-	public synchronized <S> S getExistingService(Class<S> classe)
+	/**
+	 * Return the already built instance.
+	 * If this instance doesn't exist, return null
+	 * 
+	 * @param clazz
+	 * @return
+	 */
+	public synchronized <S> S getExistingService(Class<S> clazz)
 	{
-		if(instanciedServices.containsKey(classe.getSimpleName()))
-			return (S) instanciedServices.get(classe.getSimpleName());
+		if(instanciedServices.containsKey(clazz))
+			return clazz.cast(instanciedServices.get(clazz));
 		return null;
 	}
-	
-	public synchronized <S> void addService(Class<S> classe, S object)
+
+	/**
+	 * Add an object. It will be associated to its class object.getClass()
+	 * @param object
+	 */
+	public synchronized <S> void addService(S object)
 	{
-		instanciedServices.put(classe.getSimpleName(), object);
+		instanciedServices.put(object.getClass(), object);
+	}
+
+	/**
+	 * Add an object with the specified class.
+	 * Useful if this class isn't object.getClass() (for example if S is a super class of object.getClass())
+	 * @param clazz
+	 * @param object
+	 */
+	public synchronized <S> void addService(Class<S> clazz, S object)
+	{
+		instanciedServices.put(clazz, object);
 	}
 	
-	public synchronized <S> void removeService(Class<S> classe)
+	/**
+	 * Remove an instance from its class
+	 * @param clazz
+	 */
+	public synchronized <S> void removeService(Class<S> clazz)
 	{
-		instanciedServices.remove(classe.getSimpleName());
+		instanciedServices.remove(clazz);
 	}
 
 	/**
@@ -112,7 +129,6 @@ public class Injector
 	 * @throws InjectorException
 	 * @throws InterruptedException
 	 */
-	@SuppressWarnings("unchecked")
 	private synchronized <S> S getServiceRecursif(Class<S> classe, Stack<String> stack, Object... extraParam) throws InjectorException
 	{
 		try
@@ -120,8 +136,8 @@ public class Injector
 			/**
 			 * Si l'objet existe déjà et que c'est un Service, on le renvoie
 			 */
-			if(instanciedServices.containsKey(classe.getSimpleName()))
-				return (S) instanciedServices.get(classe.getSimpleName());
+			if(instanciedServices.containsKey(classe))
+				return classe.cast(instanciedServices.get(classe));
 
 			/**
 			 * Détection de dépendances circulaires
@@ -144,7 +160,7 @@ public class Injector
 			 * On suppose qu'il n'y a chaque fois qu'un seul constructeur pour
 			 * cette classe
 			 */
-			Constructor<S> constructeur;
+			Constructor<?> constructeur;
 
 			if(classe.getConstructors().length > 1)
 			{
@@ -164,7 +180,7 @@ public class Injector
 				throw new InjectorException(classe.getSimpleName() + " has no public constructor ! " + out);
 			}
 			else
-				constructeur = (Constructor<S>) classe.getConstructors()[0];
+				constructeur = classe.getConstructors()[0];
 
 			Class<?>[] param = constructeur.getParameterTypes();
 
@@ -196,9 +212,9 @@ public class Injector
 			/**
 			 * Instanciation et sauvegarde
 			 */
-			S s = constructeur.newInstance(paramObject);
+			S s = classe.cast(constructeur.newInstance(paramObject));
 
-			instanciedServices.put(classe.getSimpleName(), s);
+			instanciedServices.put(classe, s);
 
 			// Mise à jour de la pile
 			stack.pop();
@@ -207,7 +223,7 @@ public class Injector
 		}
 		catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException | InstantiationException e)
 		{
-			throw new InjectorException("Impossible instanciation of " + classe.getSimpleName()+" (trace : "+printStack(stack)+")", e);
+			throw new InjectorException("Impossible instanciation of " + classe.getSimpleName()+" ("+printStack(stack)+")", e);
 		}
 	}
 
