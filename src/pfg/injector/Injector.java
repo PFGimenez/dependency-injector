@@ -87,9 +87,18 @@ public class Injector
 	 */
 	public synchronized <S> S getExistingService(Class<S> clazz)
 	{
-		if(instanciedServices.containsKey(clazz))
-			return clazz.cast(instanciedServices.get(clazz));
-		return null;
+		return clazz.cast(instanciedServices.get(clazz));
+	}
+	
+	/**
+	 * Return true iff an instance exists
+	 * 
+	 * @param clazz
+	 * @return
+	 */
+	public synchronized boolean containsService(Class<?> clazz)
+	{
+		return instanciedServices.containsKey(clazz);
 	}
 
 	/**
