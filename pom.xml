@@ -1,0 +1,23 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>pfg.injector</groupId>
+  <artifactId>dependency-injector</artifactId>
+  <version>1.1</version>
+
+  <packaging>jar</packaging>
+
+  <name>A simple dependency injector library</name>
+
+  <url>https://github.com/PFGimenez/dependency-injector</url>
+
+  <properties>
+      <maven.compiler.source>1.8</maven.compiler.source>
+      <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+
+  <build>
+  </build>
+
+</project>
