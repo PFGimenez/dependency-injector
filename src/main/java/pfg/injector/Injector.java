@@ -36,7 +36,7 @@ public class Injector
 		try
 		{
 			FileWriter fw = new FileWriter(new File(filename));
-			fw.write("digraph dependences {\n\n");
+			fw.write("digraph dependencies {\n\n");
 
 			for(Class<?> classe : grapheDep.keySet())
 				fw.write(classe.getSimpleName() + ";\n");
@@ -56,8 +56,6 @@ public class Injector
 			}
 			fw.write("\n}\n");
 			fw.close();
-			
-			System.out.println("Dependency graph saved");
 		}
 		catch(IOException e)
 		{
