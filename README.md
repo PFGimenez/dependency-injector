@@ -1,13 +1,32 @@
 # A simple dependency injector
 
-## Downloading / compiling [![Build Status](https://travis-ci.org/PFGimenez/dependency-injector.svg?branch=master)](https://travis-ci.org/PFGimenez/dependency-injector)
+## Maven installation
 
-You can find the latest compiled .jar here : https://github.com/PFGimenez/dependency-injector/releases/download/v1.1/dependency-injector-1.1.jar.
+If you want to use this library in one of your maven project, add this to your pom.xml :
 
-Otherwise, you can compile it yourself. You will need a JDK and maven.
+    <repositories>
+        <repository>
+            <id>injector-pfg-mvn-repo</id>
+            <url>https://raw.githubusercontent.com/PFGimenez/injector/mvn-repo/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+
+and
+
+    <dependency>
+        <groupId>pfg.injector</groupId>
+        <artifactId>dependency-injector</artifactId>
+        <version>[1.1,)</version>
+    </dependency>
+
+## Manual compilation [![Build Status](https://travis-ci.org/PFGimenez/dependency-injector.svg?branch=master)](https://travis-ci.org/PFGimenez/dependency-injector)
+
+You can compile it yourself. You will need a JDK and maven.
 
     $ git clone https://github.com/PFGimenez/dependency-injector.git --depth 1
     $ cd dependency-injector
     $ mvn install
-
-The jar file will be located in the `target` directory.

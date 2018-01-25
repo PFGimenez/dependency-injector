@@ -64,6 +64,25 @@ public class Injector
 	}
 
 	/**
+	 * Create an object of this class (even if it is already built)
+	 * Deals with the dependency injection.
+	 * The object won't be saved in the injector.
+	 * 
+	 * @param clazz
+	 * @return an instance of this class
+	 * @throws InjectorException
+	 */
+/*	public synchronized <S> S getServiceWithoutRegistration(Class<S> clazz) throws InjectorException
+	{
+		S tmp = clazz.cast(instanciedServices.remove(clazz));
+		getServiceRecursif(clazz, new Stack<String>());
+		S out = clazz.cast(instanciedServices.remove(clazz));
+		if(tmp != null)
+			instanciedServices.put(clazz, tmp);
+		return out;
+	}*/
+	
+	/**
 	 * Create (if necessary) an object of this class
 	 * Deals with the dependency injection.
 	 * 
