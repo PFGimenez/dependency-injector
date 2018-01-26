@@ -29,9 +29,9 @@
     </licenses>
 
     	<scm>
-            <url>https://github.com/PFGimenez/config</url>
-            <connection>scm:git:git://github.com/PFGimenez/config.git</connection>
-            <developerConnection>scm:git:git@github.com:PFGimenez/config.git</developerConnection>
+            <url>https://github.com/PFGimenez/dependency-injector</url>
+            <connection>scm:git:git://github.com/PFGimenez/dependency-injector.git</connection>
+            <developerConnection>scm:git:git@github.com:PFGimenez/dependency-injector.git</developerConnection>
     </scm>
 
 	<developers>
@@ -79,6 +79,32 @@
             <goal>site</goal>
           </goals>
           <phase>deploy</phase>
+        </execution>
+      </executions>
+    </plugin>
+
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-source-plugin</artifactId>
+      <executions>
+        <execution>
+          <id>attach-sources</id>
+          <goals>
+            <goal>jar</goal>
+          </goals>
+        </execution>
+      </executions>
+  </plugin>
+
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-source-plugin</artifactId>
+      <executions>
+        <execution>
+          <id>attach-javadocs</id>
+          <goals>
+            <goal>jar</goal>
+          </goals>
         </execution>
       </executions>
     </plugin>
