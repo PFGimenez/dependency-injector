@@ -8,10 +8,6 @@ If you want to use this library in one of your maven project, add this to your p
         <repository>
             <id>injector-pfg-mvn-repo</id>
             <url>https://raw.githubusercontent.com/PFGimenez/injector/mvn-repo/</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
         </repository>
     </repositories>
 
