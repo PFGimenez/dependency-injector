@@ -2,12 +2,18 @@
 
 ## Maven installation
 
-If you want to use this library in one of your maven project, add this to your pom.xml :
+If you want to use this library in one of your maven project, add this to your `pom.xml`:
 
     <repositories>
         <repository>
-            <id>injector-pfg-mvn-repo</id>
-            <url>https://raw.githubusercontent.com/PFGimenez/injector/mvn-repo/</url>
+            <id>PFGimenez-Kraken</id>
+            <url>https://packagecloud.io/PFGimenez/Kraken/maven2</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
     </repositories>
 
