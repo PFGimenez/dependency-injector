@@ -2,12 +2,11 @@ language : java
 script : mvn install
 deploy :
     provider: script
-    script: "cp .travis.settings.xml $HOME/.m2/settings.xml && mvn deploy || :"
+    script: "cp .travis.settings.xml $HOME/.m2/settings.xml && mvn jar:jar deploy:deploy || :"
     skip_cleanup: true
 jdk : oraclejdk8
 notifications:
     slack: intech-sudparis:Z3xKQEmZT2a9BFBqouokQ6J7
     on_success: change
     on_failure: always
-branches :
-    except: mvn-repo 
+    email : false
