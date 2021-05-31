@@ -43,20 +43,12 @@
 	</developers>
 
 <distributionManagement>
-  <repository>
-    <id>packagecloud-travis</id>
-    <url>
-        packagecloud+https://packagecloud.io/PFGimenez/Kraken
-    </url>
-  </repository>
-  <snapshotRepository>
-    <id>packagecloud-travis</id>
-    <url>
-        packagecloud+https://packagecloud.io/PFGimenez/Kraken
-    </url>
-  </snapshotRepository>
+   <repository>
+     <id>github</id>
+     <name>GitHub Kraken-robotics Apache Maven Packages</name>
+     <url>https://maven.pkg.github.com/kraken-robotics/dependency-injector</url>
+   </repository>
 </distributionManagement>
-
 
 <build>
       <plugins>
@@ -70,13 +62,6 @@
     </plugin>
 
   </plugins>
-    <extensions>
-    <extension>
-      <groupId>io.packagecloud.maven.wagon</groupId>
-      <artifactId>maven-packagecloud-wagon</artifactId>
-      <version>0.0.6</version>
-    </extension>
-  </extensions>
   </build>
 
 </project>
